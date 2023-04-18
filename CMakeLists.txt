@@ -19,11 +19,11 @@ include_directories(${CMAKE_INSTALL_PREFIX}/include "${PROJECT_SOURCE_DIR}/inclu
 
 pkg_check_modules(PORTAUDIO portaudio-2.0>=19)
 
-target_include_directories(plugin.audio_pipeline ${PORTAUDIO_INCLUDE_DIR})
-target_link_libraries(plugin.audio_pipeline ${PORTAUDIO_LIBRARIES})
+target_include_directories(plugin.audio_pipeline PRIVATE ${PORTAUDIO_INCLUDE_DIRS})
+target_link_libraries(plugin.audio_pipeline PRIVATE ${PORTAUDIO_LIBRARIES})
 
 pkg_check_modules(SPATIALAUDIO spatialaudio)
 
-target_include_directories(plugin.audio_pipeline ${SPATIAL_INCLUDE_DIR})
-target_link_libraries(plugin.audio_pipeline ${SPATIALAUDIO_LIBRARY})
-target_link_libraries(solo.opt.exe plugin.audio_pipeline pthread)
+target_include_directories(plugin.audio_pipeline PRIVATE ${SPATIAL_INCLUDE_DIRS})
+target_link_libraries(plugin.audio_pipeline PRIVATE ${SPATIALAUDIO_LIBRARY})
+target_link_libraries(solo.opt.exe PUBLIC plugin.audio_pipeline pthread)
