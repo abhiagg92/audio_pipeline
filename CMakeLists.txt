@@ -17,7 +17,7 @@ add_executable(solo.opt.exe src/main.cpp)
 add_library(plugin.audio_pipeline SHARED src/audio.cpp src/audio_component.cpp src/sound.cpp src/realtime.cpp)
 include_directories(${CMAKE_INSTALL_PREFIX}/include "${PROJECT_SOURCE_DIR}/include")
 
-pkg_check_modules(PORTAUDIO portaudio-2.0>19)
+pkg_check_modules(PORTAUDIO portaudio-2.0>=19)
 
 target_include_directories(plugin.audio_pipeline ${PORTAUDIO_INCLUDE_DIR})
 target_link_libraries(plugin.audio_pipeline ${PORTAUDIO_LIBRARIES})
