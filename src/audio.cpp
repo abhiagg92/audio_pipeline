@@ -4,7 +4,7 @@
 #include "audio.h"
 
 #ifdef ILLIXR_INTEGRATION
-#include "../common/error_util.hpp"
+#include "common/error_util.hpp"
 #endif /// ILLIXR_INTEGRATION
 
 std::string get_path() {
