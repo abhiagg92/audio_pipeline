@@ -6,7 +6,7 @@ project(audio_pipeline VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(ILLIXR_INTEGRATION "" ON)
+set(ILLIXR_INTEGRATION ON)
 include(FindPkgConfig)
 
 set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
@@ -22,6 +22,8 @@ pkg_check_modules(PORTAUDIO portaudio>19)
 target_include_directories(plugin.audio_pipeline ${PORTAUDIO_INCLUDE_DIR})
 target_link_libraries(plugin.audio_pipeline ${PORTAUDIO_LIBRARIES})
 
+pkg_check_modules(SPATIALAUDIO spatialaudio)
 
-target_link_libraries(plugin.audio_pipeline spatialaudio)
+target_include_directories(plugin.audio_pipeline ${SPATIAL_INCLUDE_DIR})
+target_link_libraries(plugin.audio_pipeline ${SPATIALAUDIO_LIBRARY})
 target_link_libraries(solo.opt.exe plugin.audio_pipeline pthread)
