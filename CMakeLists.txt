@@ -7,12 +7,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(ILLIXR_INTEGRATION ON)
+set(ILLIXR_ROOT "" CACHE PATH "Path to ILLIXR headers")
 include(FindPkgConfig)
 
 set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
 set(CMAKE_CXX_FLAGE_RELEASE "-O3 -DNDEBUG -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
-
+include_directories(${ILLIXR_ROOT})
 add_executable(solo.opt.exe src/main.cpp)
 add_library(plugin.audio_pipeline SHARED src/audio.cpp src/audio_component.cpp src/sound.cpp src/realtime.cpp)
 include_directories(${CMAKE_INSTALL_PREFIX}/include "${PROJECT_SOURCE_DIR}/include")
