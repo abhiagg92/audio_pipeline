@@ -13,18 +13,18 @@ include(FindPkgConfig)
 set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
 set(CMAKE_CXX_FLAGE_RELEASE "-O3 -DNDEBUG -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
-include_directories(${ILLIXR_ROOT})
-add_executable(solo.opt.exe src/main.cpp)
-add_library(plugin.audio_pipeline SHARED src/audio.cpp src/audio_component.cpp src/sound.cpp src/realtime.cpp)
-include_directories(${CMAKE_INSTALL_PREFIX}/include "${PROJECT_SOURCE_DIR}/include")
 
 pkg_check_modules(PORTAUDIO portaudio-2.0>=19)
-
-target_include_directories(plugin.audio_pipeline PRIVATE ${PORTAUDIO_INCLUDE_DIRS})
-target_link_libraries(plugin.audio_pipeline PRIVATE ${PORTAUDIO_LIBRARIES})
-
 pkg_check_modules(SPATIALAUDIO spatialaudio)
+if(NOT OpenCV_FOUND)
+    find_package(OpenCV REQUIRED)
+endif()
 
-target_include_directories(plugin.audio_pipeline PRIVATE ${SPATIAL_INCLUDE_DIRS})
-target_link_libraries(plugin.audio_pipeline PRIVATE ${SPATIALAUDIO_LIBRARY})
+add_executable(solo.opt.exe src/main.cpp)
+add_library(plugin.audio_pipeline SHARED src/audio.cpp src/audio_component.cpp src/sound.cpp src/realtime.cpp)
+include_directories(${CMAKE_INSTALL_PREFIX}/include "${PROJECT_SOURCE_DIR}/include" ${ILLIXR_ROOT} ${OpenCV_INCLUDE_DIRS})
+
+target_include_directories(plugin.audio_pipeline PRIVATE ${PORTAUDIO_INCLUDE_DIRS} ${SPATIAL_INCLUDE_DIRS})
+target_link_libraries(plugin.audio_pipeline PRIVATE ${PORTAUDIO_LIBRARIES} ${SPATIALAUDIO_LIBRARY} ${OpenCV_LIBRARIES})
+
 target_link_libraries(solo.opt.exe PUBLIC plugin.audio_pipeline pthread)
