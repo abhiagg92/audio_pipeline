@@ -22,8 +22,8 @@ endif()
 
 add_executable(solo.opt.exe src/main.cpp)
 add_library(plugin.audio_pipeline SHARED src/audio.cpp src/audio_component.cpp src/sound.cpp src/realtime.cpp)
-include_directories("${CMAKE_INSTALL_PREFIX}/include ${PROJECT_SOURCE_DIR}/include ${ILLIXR_ROOT} ${OpenCV_INCLUDE_DIRS}")
-message("${CMAKE_INSTALL_PREFIX}/include ${PROJECT_SOURCE_DIR}/include ${ILLIXR_ROOT} ${OpenCV_INCLUDE_DIRS}")
+include_directories(${CMAKE_INSTALL_PREFIX}/include ${PROJECT_SOURCE_DIR}/include ${ILLIXR_ROOT} ${OpenCV_INCLUDE_DIRS})
+
 target_include_directories(plugin.audio_pipeline PRIVATE ${PORTAUDIO_INCLUDE_DIRS} ${SPATIALAUDIO_INCLUDE_DIRS})
 target_link_libraries(plugin.audio_pipeline PRIVATE ${PORTAUDIO_LIBRARIES} ${SPATIALAUDIO_LIBRARY} ${OpenCV_LIBRARIES})
 
