@@ -28,3 +28,6 @@ target_include_directories(plugin.audio_pipeline PUBLIC ${PORTAUDIO_INCLUDE_DIRS
 target_link_libraries(plugin.audio_pipeline PUBLIC ${PORTAUDIO_LIBRARIES} ${SPATIALAUDIO_LIBRARIES} ${OpenCV_LIBRARIES})
 
 target_link_libraries(solo.opt.exe PUBLIC plugin.audio_pipeline pthread)
+
+install(TARGETS plugin.audio_pipeline DESTINATION lib)
+install(TARGETS solo.opt.exe DESTINATION bin)
