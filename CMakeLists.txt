@@ -16,10 +16,12 @@ set(ILLIXR_ROOT "" CACHE PATH "Path to ILLIXR headers")
 
 pkg_check_modules(PORTAUDIO portaudio-2.0>=19)
 pkg_check_modules(SPATIALAUDIO spatialaudio)
-if(NOT OpenCV_FOUND)
+
+if(DEFINED INTERNAL_OPENCV)
+    find_package(OpenCV REQUIRED PATHS ${INTERNAL_OPENCV} NO_DEFAULT_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_PACKAGE_REGISTRY NO_CMAKE_SYSTEM_PATH NO_CMAKE_SYSTEM_PACKAGE_REGISTRY)
+else()
     find_package(OpenCV REQUIRED)
 endif()
-
 add_executable(solo.opt.exe src/main.cpp)
 add_library(plugin.audio_pipeline SHARED src/audio.cpp src/audio_component.cpp src/sound.cpp src/realtime.cpp)
 include_directories(${CMAKE_INSTALL_PREFIX}/include ${PROJECT_SOURCE_DIR}/include ${ILLIXR_ROOT} ${OpenCV_INCLUDE_DIRS})
