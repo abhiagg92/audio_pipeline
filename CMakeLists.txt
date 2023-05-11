@@ -7,10 +7,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FindPkgConfig)
 
-set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
-set(CMAKE_CXX_FLAGE_RELEASE "-O3 -DNDEBUG -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -fPIC -Wno-overloaded-virtual -DILLIXR_INTEGRATION=${ILLIXR_INTEGRATION}")
+set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -Wall -fPIC -Wno-overloaded-virtual")
+set(CMAKE_CXX_FLAGE_RELEASE "-O3 -DNDEBUG -Wall -fPIC -Wno-overloaded-virtual")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-ggdb -O3 -Wall -fPIC -Wno-overloaded-virtual")
 set(ILLIXR_INTEGRATION ON)
+add_definitions(-DILLIXR_INTEGRATION)
 set(ILLIXR_ROOT "" CACHE PATH "Path to ILLIXR headers")
 
 pkg_check_modules(PORTAUDIO portaudio-2.0>=19)
