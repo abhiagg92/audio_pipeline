@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 set(CMAKE_VERBOSE_MAKEFILE True)
-set(CMAKE_BUILD_TYPE RelWithDebInfo)
 
 project(audio_pipeline VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
@@ -26,7 +25,9 @@ endif()
 add_executable(solo${ILLIXR_BUILD_SUFFIX}.exe src/main.cpp)
 add_library(plugin.audio_pipeline${ILLIXR_BUILD_SUFFIX} SHARED src/audio.cpp src/audio_component.cpp src/sound.cpp src/realtime.cpp)
 include_directories(${CMAKE_INSTALL_PREFIX}/include ${PROJECT_SOURCE_DIR}/include ${ILLIXR_ROOT} ${OpenCV_INCLUDE_DIRS})
-
+if(ILLIXR_INTEGRATION)
+    target_compile_definitions(plugin.audio_pipeline${ILLIXR_BUILD_SUFFIX} PUBLIC -DAUDIO_SAMPLES=\"${CMAKE_INSTALL_PREFIX}/etc/audio_pipeline\")
+endif()
 target_include_directories(plugin.audio_pipeline${ILLIXR_BUILD_SUFFIX} PUBLIC ${PORTAUDIO_INCLUDE_DIRS} ${SPATIALAUDIO_INCLUDE_DIRS})
 target_link_libraries(plugin.audio_pipeline${ILLIXR_BUILD_SUFFIX} PUBLIC ${PORTAUDIO_LIBRARIES} ${SPATIALAUDIO_LIBRARIES} ${OpenCV_LIBRARIES})
 
@@ -34,3 +35,5 @@ target_link_libraries(solo${ILLIXR_BUILD_SUFFIX}.exe PUBLIC plugin.audio_pipelin
 
 install(TARGETS plugin.audio_pipeline${ILLIXR_BUILD_SUFFIX} DESTINATION lib)
 install(TARGETS solo${ILLIXR_BUILD_SUFFIX}.exe DESTINATION bin)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/samples
+        DESTINATION etc/audio_pipeline)
