@@ -2,9 +2,9 @@ use_integ=$(ILLIXR_INTEGRATION)
 
 SRCDIR=./src/
 BINDIR=./bin/
-CC=clang-10
-CXX=clang++-10
-LD=clang++-10
+CC=clang-11
+CXX=clang++-11
+LD=clang++-11
 CFLAGS=-Wall -fPIC -I./include -DILLIXR_INTEGRATION=$(use_integ)
 CXXFLAGS=-std=c++17 -Wall -fPIC -I./include -I./portaudio/include -Wno-overloaded-virtual -DILLIXR_INTEGRATION=$(use_integ)
 LD_LIBS=-lpthread -pthread portaudio/lib/.libs/libportaudio.so
